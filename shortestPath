@@ -1,4 +1,4 @@
-#Class to represent a graph 
+Class to represent a graph 
 class Graph: 
     
     # A utility function to find the  
@@ -101,31 +101,27 @@ class Graph:
         return path
   
 
-
-#converst the dictionary into an adjacent array to easily use
+def convertArray(nodes):  #converst the dictionary into an adjacent array to easily use
     
-def convertArray(nodes):  
     graph = []
         
     
     for i in range(len(nodes)):
-        connections = nodes[1+i].connections
-        weights = nodes[1+i].weights
+        connections = nodes[i][0]
+        weights = nodes[i][1]
         
         convertArrayGraph = []
-        weightIndexing = 0
         
         for j in range(len(nodes)):
             if not j in connections:
                 convertArrayGraph.append(0);
             else:
-                convertArrayGraph.append(weights[weightIndexing])
-                weightIndexing += 1
+                convertArrayGraph.append(weights[connections.index(j)])
                
         graph.append(convertArrayGraph)
         
     return graph
-    
+
 """
 inputs -
 graph - dictionary housing the node connections and weights
