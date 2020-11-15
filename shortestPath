@@ -125,6 +125,46 @@ def convertArray(nodes):
         graph.append(convertArrayGraph)
         
     return graph
+    
+"""
+inputs -
+graph - dictionary housing the node connections and weights
+shortPath - an array of the shortest path for emergency cars
+roundAbouts - an array of the nodes that are roundabouts
+curveRoads - a double array that contains the edges that trucks should not travel on.
+emergency - boolean variable to note if car is emergency vehicle
+bigCar - boolean variable to note if car is big
+"""
+def weighting(graph, shortPath, roundAbouts, curveRoads, bigCar, emergency):
+    
+    #marks each road last traveled on as more congested
+    for a in range(len(shortPath) - 1): 
+        nodeInt = shortPath[a]
+        nodeFinal = shortPath[a+1]
+        
+        
+        if emergency == False and bigCar == False:
+            connections = graph[nodeInt][0]
+            weightIndex = connections.index(nodeFinal)
+            graph[nodeInt][1][weightIndex] *= 2
+                
+            connections = graph[nodeFinal][0]
+            weightIndex = connections.index(nodeInt)
+            graph[nodeFinal][1][weightIndex] *= 2
+            
+        if bigCar == True:
+            for a in roundAbouts:
+                for b in graph[a][0]:
+                    connections = graph[a][0]
+                    weightIndex = connections.index(b)
+                    graph[a][1][weightIndex] = 999
+        
+                    connections = graph[b][0]
+                    weightIndex = connections.index(a)
+                    graph[b][1][weightIndex] = 999
+        
+        
+    return graph
         
     
 # Example method. Return shortest path from point 0 to specifiec point
